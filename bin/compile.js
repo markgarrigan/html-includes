@@ -210,7 +210,7 @@ const compile = (args) => {
         // Save the file to dist
         let filename = file.path.substring(args.src.length);
         let outputFilePath = args.dest + filename;
-        console.log("Saving: " + file.path + "-> " + outputFilePath);
+        // console.log("Saving: " + file.path + "-> " + outputFilePath);
 
         file.content = minimizeOptions
           ? htmlMinifier.minify(file.content, minimizeOptions)
