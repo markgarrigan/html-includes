@@ -28,38 +28,33 @@ const getFilesId = (fileRequest, fileCurrent, files) => {
   let path;
   if (fileRequest.substring(0, 1) == "/") {
     // Absolute
-    path = args.src + fileRequest;
+    path = `src/${fileRequest}`;
   } else {
     // Rel
     let dir = fileCurrent.split("/");
     dir.pop();
     dir = dir.join("/");
-    path =
-      dir +
-      "/" +
-      (fileRequest.substring(0, 2) == `./`
-        ? fileRequest.substring(2)
-        : fileRequest);
+    path = `${dir}/${fileRequest.includes('./') ? fileRequest.substring(2) : fileRequest}`;
   }
 
   // Resolve any parent selectors, e.g:
   // src/component/../../_above.html
   // _above.html
-  let split = path.split("/");
-  while (split.includes("..")) {
-    split.forEach((s, i) => {
-      if (s === "..") {
-        if (i == 0) {
-          console.error(
-            `\n SORRY: Cannot include a file above the main directory\n`
-          );
-          split.splice(i, 1); // erroring it out of the while loop
-        }
-        split.splice(i - 1, 2);
-      }
-    });
-  }
-  path = split.join("/");
+  // let split = path.split("/");
+  // while (split.includes("..")) {
+  //   split.forEach((s, i) => {
+  //     if (s === "..") {
+  //       if (i == 0) {
+  //         console.error(
+  //           `\n SORRY: Cannot include a file above the main directory\n`
+  //         );
+  //         split.splice(i, 1); // erroring it out of the while loop
+  //       }
+  //       split.splice(i - 1, 2);
+  //     }
+  //   });
+  // }
+  // path = split.join("/");
 
   // Get matching entry from files array
   let filez = files.filter((f) => f.path == path);
