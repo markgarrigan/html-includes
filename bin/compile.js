@@ -71,7 +71,8 @@ const getFilesId = (fileRequest, fileCurrent, files) => {
 };
 
 const compile = (args) => {
-  glob(args.src + "/**/*.html", {}, (err, files) => {
+  const path = args.src.includes('.html') ? args.src : `${args.src}/**/*.html`
+  glob(path, {}, (err, files) => {
     if (err) {
       console.log(err);
       return;
